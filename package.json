@@ -4,28 +4,9 @@
   "description": "Obtener información de links en archivos markdown.",
   "author": "Gabriela Victorio Poma <lucerovp16@gmail.com>",
   "main": "index.js",
-  "keywords": [
-    "javascript",
-    "node",
-    "jest"
-  ],
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "eslint": "eslint --ext .js test/",
-    "pretest": "npm run eslint",
-    "test": "jest --coverage"
-  },
-  "devDependencies": {
-    "eslint": "^8.14.0"
-  },
-  "dependencies": {
-    "chalk": "^5.0.1",
-    "jest": "28.0.2"
-  },
   "engines": {
     "node": ">=14.x"
-  }
+  },
+  "type": "module"
 }
 
