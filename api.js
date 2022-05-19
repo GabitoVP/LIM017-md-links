@@ -79,9 +79,3 @@ console.log('Estos son los archivos dentro de la ruta:', traverseDirectoryToFile
 // export default foo = 'foo';
 // console.log(fs);
 // console.log(path);
-
-// export const isvalidRoute = (route) => {
-//   const pathAbsolute = (path.isAbsolute(route)) ? route : resolve(route);
-//   const valid = fs.existsSync(pathAbsolute);
-//   return { valid, pathAbsolute };
-// };

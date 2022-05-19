@@ -1,27 +1,22 @@
-import { routeIsAbsolute } from './api.js';
+/* eslint-disable import/prefer-default-export */
+/* eslint-disable prefer-promise-reject-errors */
+/* eslint-disable arrow-body-style */
+/* eslint-disable import/extensions */
+import { pathExists, pathIsAbsolute, traverseDirectoryToFile } from './api.js';
 
-console.log(routeIsAbsolute);
+const mdLinks = (path) => {
+  return new Promise((resolve, reject) => {
+    const pathExist = pathExists(path);
+    if (pathExist === false) {
+      reject('error');
+    } else {
+      const pathAbsolute = pathIsAbsolute(path);
+      const rr = traverseDirectoryToFile(pathAbsolute);
+      resolve(rr);
+    }
+  });
+};
 
-// const mdLinks = (route, options) => {
-//     if (!rute(route)) {
-//       console.log('no hay path')
-//       return
-//     }
-//     console.log(rute(route));
-//   }
-
-// const mdLinks = (path, option) => {
-//   return new Promise((resolve, reject) => {
-//     routeIsAbsolute(path)
-//     .then(() => {
-//       if (routeIsAbsolute(path)){
-//         return routeIsAbsolute(path);
-//       }
-//     })
-//     .cath((error) => {
-//   console.log(error);
-//     })
-//   })
-// }
-
-//   mdLinks(process.argv[2])
+mdLinks('mdLinks')
+  .then((res) => console.log(res))
+  .catch((err) => console.log(err));
