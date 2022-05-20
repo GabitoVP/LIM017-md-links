@@ -47,35 +47,45 @@ export const traverseDirectoryToFile = (route) => {
         arrayResultRoute.push(arrayRoute);
       }
     });
-  } else {
+  } else if (isMdFile(route)) {
     arrayResultRoute.push(route);
+  } else {
+    return 'ERROR : No es de tipo md';
   }
   return arrayResultRoute;
 };
-console.log('Estos son los archivos dentro de la ruta:', traverseDirectoryToFile('mdLinks'));
+// console.log('Estos son los archivos dentro de la ruta:', traverseDirectoryToFile('mdLinks'));
 
-// Funcion para saber si la ruta es un directorio
-// export const itsDirectory = (filePath) => {
-//     let directoryPromise = new Promise((resolve, reject) => {
-//       fs.lstat(filePath, (err, stats) => {
-//         if (err) {
-//           reject(err);
-//           return;
-//         }
-//         resolve(stats.isDirectory());
-//       });
-//     });
-//     return directoryPromise;
-//   };
-// export const rute = (route) => {
-//   if (path.isAbsolute(route)) {
-//         return true;
-//   }
-//  else {
-//   return false;
-// }
-// };
+// Leer el archivo y extraer links
+export const extractMdFileLinks = (route) => {
+  const arrayLinks = [];
 
-// export default foo = 'foo';
-// console.log(fs);
-// console.log(path);
+  const expRegFile = /\[(.*)\]\((https*?:([^"')\s]+))/gi;
+  const expRegUrl = /(((https?:\/\/)|(http?:\/\/)|(www\.))[^\s\n)]+)(?=\))/gi;
+  const expRegTextUrl = /\[(.*)\]/gi;
+  // lee el archivo ===/////
+  const readFilePath = readFile(route);
+  const allLinksMd = readFilePath.match(expRegFile);
+  // console.log(allLinksMd);
+  const arrayOnlyUrl = readFilePath.match(expRegUrl);
+  console.log((arrayOnlyUrl));
+
+  if (allLinksMd != null) {
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < allLinksMd.length; i++) {
+      const textMd = allLinksMd[i].match(expRegTextUrl)[0];
+      console.log((allLinksMd[i].match(expRegTextUrl)[0]));// object after than string object (Rewiev Reg. expression)
+      // console.log(typeof (allLinksMd[i].match(expRegTextUrl)));
+      const objLinks = {
+        href: arrayOnlyUrl[i],
+        text: textMd,
+        file: pathIsAbsolute(route).toString(),
+      };
+      arrayLinks.push(objLinks);
+    }
+  } else {
+    return 'No se encontraron links';
+  }
+  return arrayLinks;
+};
+console.log(extractMdFileLinks('C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba2.md'));

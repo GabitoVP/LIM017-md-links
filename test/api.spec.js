@@ -5,6 +5,7 @@ import {
   pathIsFile,
   isMdFile,
   traverseDirectoryToFile,
+  extractMdFileLinks,
 } from '../api';
 
 const routeAbsolute = 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md';
@@ -13,7 +14,7 @@ describe('pathExists', () => {
     expect(pathExists('prueba.md')).toBe(true);
   });
   it('Deberia retornar que no existe la ruta ', () => {
-    expect(pathExists('prueba2.md')).toBe(false);
+    expect(pathExists('prueba3.md')).toBe(false);
   });
 });
 
@@ -62,10 +63,32 @@ describe('traverseDirectoryToFile', () => {
     const arrayRoutes = ['prueba.md'];
     expect(traverseDirectoryToFile('prueba.md')).toEqual(arrayRoutes);
   });
+  it('No deberia almacenar en un array las rutas de archivos que no son md', () => {
+    const arrayRoutes = 'ERROR : No es de tipo md';
+    expect(traverseDirectoryToFile('note.txt')).toEqual(arrayRoutes);
+  });
   it('Deberia listar y filtrar el archivo .md y retornar un array con la ruta absoluta de ese archivo', () => {
     const arrayRoutes = [
       'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md',
     ];
     expect(traverseDirectoryToFile(pathIsAbsolute('prueba.md'))).toEqual(arrayRoutes);
+  });
+});
+
+describe('extractMdFileLinks', () => {
+  it('Deberia retornar un objeto de tipo array[href,text,file]', () => {
+    const objLinks = [
+      {
+        href: 'https://es.wikipedia.org/wiki/Markdown',
+        text: '[Markdown]',
+        file: 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md',
+      },
+      {
+        href: 'https://nodejs.org/',
+        text: '[Node.js]',
+        file: 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md',
+      },
+    ];
+    expect(extractMdFileLinks('prueba.md')).toEqual(objLinks);
   });
 });

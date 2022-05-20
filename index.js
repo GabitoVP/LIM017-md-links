@@ -11,8 +11,8 @@ const mdLinks = (path) => {
       reject('error');
     } else {
       const pathAbsolute = pathIsAbsolute(path);
-      const rr = traverseDirectoryToFile(pathAbsolute);
-      resolve(rr);
+      const travelDirectoryToFile = traverseDirectoryToFile(pathAbsolute);
+      resolve(travelDirectoryToFile);
     }
   });
 };
