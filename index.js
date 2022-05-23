@@ -2,7 +2,7 @@
 /* eslint-disable prefer-promise-reject-errors */
 /* eslint-disable arrow-body-style */
 /* eslint-disable import/extensions */
-import { pathExists, pathIsAbsolute, traverseDirectoryToFile } from './api.js';
+import { pathExists, pathIsAbsolute, traverseDirectoryToFile, extractDirectoriesLinks } from './api.js';
 
 const mdLinks = (path) => {
   return new Promise((resolve, reject) => {
@@ -12,11 +12,12 @@ const mdLinks = (path) => {
     } else {
       const pathAbsolute = pathIsAbsolute(path);
       const travelDirectoryToFile = traverseDirectoryToFile(pathAbsolute);
-      resolve(travelDirectoryToFile);
+      const extractDirectoryLinks = extractDirectoriesLinks(travelDirectoryToFile);
+      resolve(extractDirectoryLinks);
     }
   });
 };
 
-mdLinks('mdLinks')
+mdLinks('note2.txt')
   .then((res) => console.log(res))
   .catch((err) => console.log(err));

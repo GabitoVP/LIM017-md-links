@@ -6,6 +6,7 @@ import {
   isMdFile,
   traverseDirectoryToFile,
   extractMdFileLinks,
+  extractDirectoriesLinks,
 } from '../api';
 
 const routeAbsolute = 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md';
@@ -90,5 +91,37 @@ describe('extractMdFileLinks', () => {
       },
     ];
     expect(extractMdFileLinks('prueba.md')).toEqual(objLinks);
+  });
+  it('No deberia retornar un objeto de tipo array', () => {
+    const objLinks = 'No se encontraron links';
+    expect(extractMdFileLinks('prueba2.md')).toBe(objLinks);
+  });
+});
+
+describe('extractDirectoriesLinks', () => {
+  it('Deberia retornar un objeto de tipo array[href,text,file]', () => {
+    const objLinksDirectory = [
+      {
+        href: 'https://www.youtube.com/watch?v=lPPgY3HLlhQ',
+        text: '[Píldora recursión - YouTube Laboratoria Developers]',
+        file: 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\mdLinks\\md2.md',
+      },
+      {
+        href: 'https://medium.com/laboratoria-developers/recursi%C3%B3n-o-recursividad-ec8f1a359727',
+        text: '[Recursión o Recursividad - Laboratoria Developers en Medium]',
+        file: 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\mdLinks\\md2.md',
+      },
+      {
+        href: 'https://curriculum.laboratoria.la/es/topics/javascript/04-arrays',
+        text: '[Arreglos]',
+        file: 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\mdLinks\\prueba\\md1.md',
+      },
+      {
+        href: 'https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/',
+        text: '[Array - MDN]',
+        file: 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\mdLinks\\prueba\\md1.md',
+      },
+    ];
+    expect(extractDirectoriesLinks(traverseDirectoryToFile('mdLinks'))).toEqual(objLinksDirectory);
   });
 });

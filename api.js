@@ -68,13 +68,13 @@ export const extractMdFileLinks = (route) => {
   const allLinksMd = readFilePath.match(expRegFile);
   // console.log(allLinksMd);
   const arrayOnlyUrl = readFilePath.match(expRegUrl);
-  console.log((arrayOnlyUrl));
+  // console.log((arrayOnlyUrl));
 
   if (allLinksMd != null) {
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < allLinksMd.length; i++) {
       const textMd = allLinksMd[i].match(expRegTextUrl)[0];
-      console.log((allLinksMd[i].match(expRegTextUrl)[0]));// object after than string object (Rewiev Reg. expression)
+      // console.log((allLinksMd[i].match(expRegTextUrl)[0]));// object after than string object (Rewiev Reg. expression)
       // console.log(typeof (allLinksMd[i].match(expRegTextUrl)));
       const objLinks = {
         href: arrayOnlyUrl[i],
@@ -88,4 +88,19 @@ export const extractMdFileLinks = (route) => {
   }
   return arrayLinks;
 };
-console.log(extractMdFileLinks('C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba2.md'));
+// console.log(extractMdFileLinks('C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba2.md'));
+
+// función que lee directorios y extrae links
+
+export const extractDirectoriesLinks = (arrayFileMd) => {
+  const arrayReadDirectory = [];
+  arrayFileMd.forEach((file) => {
+    const arrayLinksDirectory = extractMdFileLinks(file);
+    // console.log(arrayLinksDirectory);
+    arrayReadDirectory.push(arrayLinksDirectory);
+    // console.log(arrayReadDirectory);
+  });
+  return arrayReadDirectory.flat();
+};
+// const prueba = traverseDirectoryToFile('mdLinks');
+// console.log(extractDirectoriesLinks(prueba));
