@@ -1,7 +1,9 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 /* eslint-disable no-confusing-arrow */
 import fs from 'fs';
 import path from 'path';
+import fetch from 'node-fetch';
 
 const myArgument = process.argv[2];
 
@@ -35,13 +37,13 @@ export const traverseDirectoryToFile = (route) => {
   let arrayResultRoute = [];
   if (pathIsDirectory(route)) {
     const arrayDirectory = fs.readdirSync(route);
-    console.log(arrayDirectory);
+    // console.log(arrayDirectory);
     arrayDirectory.forEach((file) => {
       const arrayRoute = path.join(route, file);
-      console.log(arrayRoute);
+      // console.log(arrayRoute);
       if (pathIsDirectory(arrayRoute)) {
         arrayResultRoute = arrayResultRoute.concat(traverseDirectoryToFile(arrayRoute));
-        console.log(arrayResultRoute);
+        // console.log(arrayResultRoute);
       }
       if (isMdFile(arrayRoute)) {
         arrayResultRoute.push(arrayRoute);
@@ -65,7 +67,7 @@ export const extractMdFileLinks = (route) => {
   const expRegTextUrl = /\[(.*)\]/gi;
   // lee el archivo ===/////
   const readFilePath = readFile(route);
-  const allLinksMd = readFilePath.match(expRegFile);
+  const allLinksMd = readFilePath.match(expRegFile); // match() obtener todas las ocurrencias de una expresión regular dentro de una cadena.
   // console.log(allLinksMd);
   const arrayOnlyUrl = readFilePath.match(expRegUrl);
   // console.log((arrayOnlyUrl));
@@ -98,9 +100,33 @@ export const extractDirectoriesLinks = (arrayFileMd) => {
     const arrayLinksDirectory = extractMdFileLinks(file);
     // console.log(arrayLinksDirectory);
     arrayReadDirectory.push(arrayLinksDirectory);
-    // console.log(arrayReadDirectory);
   });
   return arrayReadDirectory.flat();
 };
-// const prueba = traverseDirectoryToFile('mdLinks');
+const prueba = traverseDirectoryToFile('linkRoto.md');
 // console.log(extractDirectoriesLinks(prueba));
+
+// validar links con peticiones http
+export const validateLinks = (urls) => {
+  return Promise.all(urls.map((arrayLinks) => {
+    return fetch(arrayLinks.href)
+      .then((resolve) => {
+        const objResolveLinks = {
+          ...arrayLinks,
+          status: resolve.status,
+          ok: (resolve.status >= 200) && (resolve.status <= 399) ? 'ok' : 'fallo',
+        };
+        return objResolveLinks;
+      })
+      .catch(() => {
+        return {
+          ...arrayLinks,
+          status: 'Este link esta roto',
+          ok: 'fallo',
+        };
+      });
+  }));
+};
+
+validateLinks(extractDirectoriesLinks(prueba))
+  .then((resolve) => console.log('links:', resolve));

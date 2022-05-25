@@ -39,19 +39,19 @@ describe('pathIsDirectory', () => {
 
 describe('pathIsFile', () => {
   it('Deberia retornar false si no es un archivo', () => {
-    expect(pathIsFile('mdLinks')).toBeFalsy();
+    expect(pathIsFile('mdLinks')).toBe(false);
   });
   it('Deberia retornar true para archivo', () => {
-    expect(pathIsFile('./prueba.md')).toBeTruthy();// igual que el toBeFalsy pero para true
+    expect(pathIsFile('./prueba.md')).toBe(true);// igual que el toBeFalsy pero para true
   });
 });
 
 describe('isMdFile', () => {
   it('Deberia retornar false si no es un archivo md', () => {
-    expect(isMdFile('note.txt')).toBeFalsy();
+    expect(isMdFile('note.txt')).toBe(false);
   });
   it('Deberia retornar true para archivo md', () => {
-    expect(isMdFile('./prueba.md')).toBeTruthy();
+    expect(isMdFile('./prueba.md')).toBe(true);
   });
 });
 
