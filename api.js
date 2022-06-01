@@ -1,36 +1,37 @@
+/* eslint-disable import/extensions */
 /* eslint-disable arrow-body-style */
 /* eslint-disable max-len */
 /* eslint-disable no-confusing-arrow */
 import fs from 'fs';
 import path from 'path';
-import fetch from 'node-fetch';
+import { fetch } from './libraries.js';
 
 const myArgument = process.argv[2];
 
 // determinar si la ruta existe
 export const pathExists = (route) => fs.existsSync(route);
-console.log('la ruta existe?', pathExists(myArgument));
+// console.log('la ruta existe?', pathExists(myArgument));
 // console.log(pathExists('C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md'));
 
 // funcion para resolver si la ruta es absoluta o relativa
 export const pathIsAbsolute = (route) => path.isAbsolute(route) ? route : path.resolve(route);
-console.log('se convierte la ruta en absoluta', pathIsAbsolute('prueba.md'));
+// console.log('se convierte la ruta en absoluta', pathIsAbsolute('prueba.md'));
 
 // leer archivo
 export const readFile = (route) => fs.readFileSync(route, 'utf-8');
-console.log('puede leer el archivo?', readFile('prueba.md'));
+// console.log('puede leer el archivo?', readFile('prueba.md'));
 
 // determinar si es un directorio
 export const pathIsDirectory = (route) => fs.lstatSync(route).isDirectory();
-console.log('La ruta es un directorio?:', pathIsDirectory('C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\mdLinks'));
+// console.log('La ruta es un directorio?:', pathIsDirectory('C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\mdLinks'));
 
 // determinar si es un archivo
 export const pathIsFile = (route) => fs.statSync(route).isFile();
-console.log('La ruta es un archivo?:', pathIsFile('prueba.md'));
+// console.log('La ruta es un archivo?:', pathIsFile('prueba.md'));
 
 // determinar si un archivo tiene extención md
 export const isMdFile = (extension) => path.extname(extension) === '.md';
-console.log('Es un archivo md?:', isMdFile('note.txt'));
+// console.log('Es un archivo md?:', isMdFile('note.txt'));
 
 // función para recursividad
 export const traverseDirectoryToFile = (route) => {
@@ -85,9 +86,9 @@ export const extractMdFileLinks = (route) => {
       };
       arrayLinks.push(objLinks);
     }
-  } else {
-    return 'No se encontraron links';
-  }
+  } // else {
+  //   return 'No se encontraron links';
+  // }
   return arrayLinks;
 };
 // console.log(extractMdFileLinks('C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba2.md'));
@@ -128,5 +129,18 @@ export const validateLinks = (urls) => {
   }));
 };
 
-validateLinks(extractDirectoriesLinks(prueba))
-  .then((resolve) => console.log('links:', resolve));
+// validateLinks(extractDirectoriesLinks(prueba))
+//   .then((resolve) => console.log('links:', resolve));
+
+// export const checkHasLinks = (pathLink) => {
+//   const expRegUrl = /(((https?:\/\/)|(http?:\/\/)|(www\.))[^\s\n)]+)(?=\))/gi;
+//   const arrayOnlyUrl = readFile(pathLink).match(expRegUrl);
+//   // console.log(urlLength);
+//   if (arrayOnlyUrl === null) {
+//     return 0;
+//   }
+//   return arrayOnlyUrl.length;
+// };
+
+// const prueba2 = extractDirectoriesLinks(prueba);
+// console.log(prueba2);

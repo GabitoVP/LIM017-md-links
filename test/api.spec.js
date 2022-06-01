@@ -7,7 +7,10 @@ import {
   traverseDirectoryToFile,
   extractMdFileLinks,
   extractDirectoriesLinks,
+  validateLinks,
 } from '../api';
+
+jest.mock('../libraries.js');
 
 const routeAbsolute = 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md';
 describe('pathExists', () => {
@@ -42,7 +45,7 @@ describe('pathIsFile', () => {
     expect(pathIsFile('mdLinks')).toBe(false);
   });
   it('Deberia retornar true para archivo', () => {
-    expect(pathIsFile('./prueba.md')).toBe(true);// igual que el toBeFalsy pero para true
+    expect(pathIsFile('./prueba.md')).toBe(true);
   });
 });
 
@@ -92,10 +95,6 @@ describe('extractMdFileLinks', () => {
     ];
     expect(extractMdFileLinks('prueba.md')).toEqual(objLinks);
   });
-  it('No deberia retornar un objeto de tipo array', () => {
-    const objLinks = 'No se encontraron links';
-    expect(extractMdFileLinks('prueba2.md')).toBe(objLinks);
-  });
 });
 
 describe('extractDirectoriesLinks', () => {
@@ -123,5 +122,70 @@ describe('extractDirectoriesLinks', () => {
       },
     ];
     expect(extractDirectoriesLinks(traverseDirectoryToFile('mdLinks'))).toEqual(objLinksDirectory);
+  });
+});
+
+// const prueba = traverseDirectoryToFile('prueba.md');
+// describe('validateLinks', () => {
+//   it('Se resuelve la promesa y retorna un array de objetos 
+// con href, text, file, status, ok', (done) => {
+//     const objResolveLinks = [
+//       {
+//         href: 'https://es.wikipedia.org/wiki/Markdown',
+//         text: '[Markdown]',
+//         file: 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md',
+//         status: 200,
+//         ok: 'ok',
+//       },
+//       {
+//         href: 'https://nodejs.org/',
+//         text: '[Node.js]',
+//         file: 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md',
+//         status: 200,
+//         ok: 'ok',
+//       },
+//     ];
+//     validateLinks(extractDirectoriesLinks(prueba))
+//       .then((result) => {
+//         expect(result).toEqual(objResolveLinks);
+//         done();
+//       });
+//   });
+// });
+
+describe('validateLinks', () => {
+  test("status: 200 - message: 'Ok'", () => {
+    const recieveObject = [
+      {
+        href: 'https://es.wikipedia.org/wiki/Markdown',
+        text: '[Markdown]',
+        file: 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md',
+      },
+      {
+        href: 'https://nodejs.org/',
+        text: '[Node.js]',
+        file: 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md',
+      },
+    ];
+    const resultObject = [
+      {
+        href: 'https://es.wikipedia.org/wiki/Markdown',
+        text: '[Markdown]',
+        file: 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md',
+        status: 200,
+        ok: 'ok',
+      },
+      {
+        href: 'https://nodejs.org/',
+        text: '[Node.js]',
+        file: 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md',
+        status: 200,
+        ok: 'ok',
+      },
+    ];
+    return validateLinks(recieveObject)
+      .then((result) => {
+        expect(result).toEqual(resultObject);
+      });
   });
 });
