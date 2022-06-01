@@ -7,9 +7,8 @@ import {
   broken,
   statistics,
   help,
-  // banner,
-  templateFalse,
-  templateTrue,
+  validateFalse,
+  validateTrue,
 } from './cliFunction.js';
 // const myArgument = process.argv[2];
 
@@ -36,19 +35,19 @@ if (args.length === 0) {
     `));
 }
 if (args.length === 1 && args[0] === '--help') {
-  console.log(chalk.yellow(help()));
+  console.log(help);
   // console.log((banner));
 }
 
 if (args.length === 1 && args[0] !== '--help') {
-  templateFalse(mdLinks(args[0], { validate: false }));
+  validateFalse(mdLinks(args[0], { validate: false }));
 }
 
-if (args.length === 2 && args[1] === '--validate' || args[1] === '--v') {
-  templateTrue(mdLinks(args[0], { validate: true }));
+if (args.length === 2 && args[1] === '--validate') {
+  validateTrue(mdLinks(args[0], { validate: true }));
 }
 
-if (args.length === 2 && args[1] === '--stats' || args[1] === '--s') {
+if (args.length === 2 && args[1] === '--stats') {
   statistics(mdLinks(args[0], { validate: false }));
 }
 

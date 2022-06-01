@@ -2,16 +2,64 @@
 /* eslint-disable arrow-body-style */
 /* eslint-disable import/prefer-default-export */
 import chalk from 'chalk';
+import figlet from 'figlet';
+
+export const validateFalse = (links) => {
+  links.then((res) => {
+    console.log(chalk.blue(`
+               «──────────|-❋ -|──────────»  
+               |    Links Encontrados      |       
+               «──────────|-❋ -|──────────»
+    `));
+    res.forEach((link) => {
+      console.log(chalk.blue.bold(` 
+            - href:  ${link.href}   \n\t\t
+            - text:  ${link.text} \n\t\t
+            - file: ${link.file} \n 
+            _____________________________________________________________
+            `));
+    });
+  })
+    .catch((error) => {
+      console.log(chalk.bgRed(error));
+    });
+};
+
+// console.log(templateFalse(mdLinks('prueba.md', false)));
+
+export const validateTrue = (links) => {
+  links.then((res) => {
+    console.log(chalk.blue(`
+    «──────────|-❋ -|──────────»  
+    |    Links Validados        |       
+    «──────────|-❋ -|──────────»
+    `));
+    res.forEach((link) => {
+      console.log(chalk.blue.bold(` 
+            - href:  ${link.href}   \n\t\t
+            - text:  ${link.text} \n\t\t
+            - file: ${link.file} \n\t\t
+            - status: ${link.status} \n\t\t
+            - mensaje: ${link.ok} \n\t\t
+            __________________________________________________________________
+            `));
+    });
+  })
+    .catch((error) => {
+      console.log(chalk.red.bold(error));
+    });
+};
+// console.log(templateTrue(mdLinks('prueba.md', true)));
 
 export const statistics = (links) => {
   links.then((res) => {
-    const extractOnlyHref = res.map((elem) => elem.href);
+    const extractHref = res.map((elem) => elem.href);
     // console.log(extractOnlyHref);
-    const hrefSinRepeat = new Set(extractOnlyHref);// elimino los links repetidos devuelve un objeto
+    const hrefNoRepeat = new Set(extractHref);// elimino los links repetidos devuelve un objeto
     console.log(chalk.cyan.bold(`
         «──────────|-❋ -|──────────»  
-             Links Totales:  ${extractOnlyHref.length}   \n\t\t
-             Links Unicos :  ${hrefSinRepeat.size} \n\t\t            
+             Links Totales:  ${extractHref.length}   \n\t\t
+             Links Unicos :  ${hrefNoRepeat.size} \n\t\t            
         «──────────|-❋ -|──────────» 
     `));
   })
@@ -36,76 +84,12 @@ export const broken = (links) => {
     });
 };
 
-export const templateFalse = (links) => {
-  links.then((res) => {
-    console.log(chalk.blueBright(`
-               «──────────|-❋ -|──────────»  
-               |    Links Encontrados      |       
-               «──────────|-❋ -|──────────»
-    `));
-    res.forEach((link) => {
-      console.log(chalk.cyan.bold(` 
-            ➣ href:  ${link.href}   \n\t\t
-            ➣ text:  ${link.text} \n\t\t
-            ➣ file: ${link.file} \n 
-            _____________________________________________________________
-            `));
-    });
-  })
-    .catch((error) => {
-      console.log(chalk.red.bold(error));
-    });
-};
-
-// console.log(templateFalse(mdLinks('prueba.md', false)));
-
-export const templateTrue = (links) => {
-  links.then((res) => {
-    console.log(chalk.blueBright.dim(`
-    «──────────|-❋ -|──────────»  
-    |    Links Validados        |       
-    «──────────|-❋ -|──────────»
-    `));
-    res.forEach((link) => {
-      console.log(chalk.cyan.bold(` 
-            ➣ href:  ${link.href}   \n\t\t
-            ➣ text:  ${link.text} \n\t\t
-            ➣ file: ${link.file} \n\t\t
-            ➣ status: ${link.status} \n\t\t
-            ➣ mensaje: ${link.ok} \n\t\t
-            __________________________________________________________________
-            `));
-    });
-  })
-    .catch((error) => {
-      console.log(chalk.red.bold(error));
-    });
-};
-// console.log(templateTrue(mdLinks('prueba.md', true)));
-
-export const help = () => {
-  return `
-                              
-                                    █▀▄▀█ █▀▄   █   █ █▄ █ █▄▀ █▀
-                                    █ ▀ █ █▄▀   █▄▄ █ █ ▀█ █ █ ▄█
-                                    ﹀﹀﹀﹀﹀﹀﹀﹀﹀﹀﹀﹀﹀﹀﹀﹀
-            ╔══════════════════════════════════ ≪ •❈• ≫ ═══════════════════════════════════════╗
-                                     ≪❈ INSTRUCCIONES DE USO ❈≫
-            1. Ingresa un ruta: 
-            ◞───────⊰·☆·⊱───────◟  
-               mdlinks <ruta>        Resultado recibido: href, text, file.
-            ◝───────⊰·☆·⊱───────◜
- 
-            2. Agrega cualquiera de las siguientes opciones: 
-            ◞───────⊰·☆·⊱───────◟  
-               --validate ó -v       Resultado recibido: href, text, file, status y mensaje.
-            ◝───────⊰·☆·⊱───────◜
-            ◞───────⊰·☆·⊱───────◟  
-                --stats ó -s         Resultado recibido: total de links y links unicos. 
-            ◝───────⊰·☆·⊱───────◜
-            ◞───────⊰·☆·⊱───────◟  
-                --validate --stats   Resultado recibido: total de links, links unicos y
-                --stats --validate                       links rotos 
-            ◝───────⊰·☆·⊱───────◜
-            ╚══════════════════════════════════ ≪ •❈• ≫ ══════════════════════════════════════╝    `;
-};
+export const help = chalk.blue(
+  figlet.textSync('MD - LINKS', {
+    font: 'Chunky',
+    horizontalLayout: 'default',
+    verticalLayout: 'default',
+    width: 80,
+    whitespaceBreak: true,
+  }),
+);
