@@ -6,12 +6,9 @@ import fs from 'fs';
 import path from 'path';
 import { fetch } from './libraries.js';
 
-const myArgument = process.argv[2];
-
 // determinar si la ruta existe
 export const pathExists = (route) => fs.existsSync(route);
-// console.log('la ruta existe?', pathExists(myArgument));
-// console.log(pathExists('C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md'));
+// console.log('la ruta existe?',pathExists('C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md'));
 
 // funcion para resolver si la ruta es absoluta o relativa
 export const pathIsAbsolute = (route) => path.isAbsolute(route) ? route : path.resolve(route);
@@ -50,14 +47,12 @@ export const traverseDirectoryToFile = (route) => {
         arrayResultRoute.push(arrayRoute);
       }
     });
-  } else if (isMdFile(route)) {
-    arrayResultRoute.push(route);
   } else {
-    return 'ERROR : No es de tipo md';
+    arrayResultRoute.push(route);
   }
   return arrayResultRoute;
 };
-// console.log('Estos son los archivos dentro de la ruta:', traverseDirectoryToFile('mdLinks'));
+// console.log('Estos son los archivos dentro de la ruta:', traverseDirectoryToFile('mdLinks\\noArchivos'));
 
 // Leer el archivo y extraer links
 export const extractMdFileLinks = (route) => {
@@ -86,9 +81,7 @@ export const extractMdFileLinks = (route) => {
       };
       arrayLinks.push(objLinks);
     }
-  } // else {
-  //   return 'No se encontraron links';
-  // }
+  }
   return arrayLinks;
 };
 // console.log(extractMdFileLinks('C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba2.md'));
@@ -104,7 +97,7 @@ export const extractDirectoriesLinks = (arrayFileMd) => {
   });
   return arrayReadDirectory.flat();
 };
-const prueba = traverseDirectoryToFile('linkRoto.md');
+// const prueba = traverseDirectoryToFile('prueba.md');
 // console.log(extractDirectoriesLinks(prueba));
 
 // validar links con peticiones http
@@ -131,16 +124,3 @@ export const validateLinks = (urls) => {
 
 // validateLinks(extractDirectoriesLinks(prueba))
 //   .then((resolve) => console.log('links:', resolve));
-
-// export const checkHasLinks = (pathLink) => {
-//   const expRegUrl = /(((https?:\/\/)|(http?:\/\/)|(www\.))[^\s\n)]+)(?=\))/gi;
-//   const arrayOnlyUrl = readFile(pathLink).match(expRegUrl);
-//   // console.log(urlLength);
-//   if (arrayOnlyUrl === null) {
-//     return 0;
-//   }
-//   return arrayOnlyUrl.length;
-// };
-
-// const prueba2 = extractDirectoriesLinks(prueba);
-// console.log(prueba2);

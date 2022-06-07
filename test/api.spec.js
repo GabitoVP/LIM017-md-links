@@ -67,10 +67,6 @@ describe('traverseDirectoryToFile', () => {
     const arrayRoutes = ['prueba.md'];
     expect(traverseDirectoryToFile('prueba.md')).toEqual(arrayRoutes);
   });
-  it('No deberia almacenar en un array las rutas de archivos que no son md', () => {
-    const arrayRoutes = 'ERROR : No es de tipo md';
-    expect(traverseDirectoryToFile('note.txt')).toEqual(arrayRoutes);
-  });
   it('Deberia listar y filtrar el archivo .md y retornar un array con la ruta absoluta de ese archivo', () => {
     const arrayRoutes = [
       'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md',
@@ -124,34 +120,6 @@ describe('extractDirectoriesLinks', () => {
     expect(extractDirectoriesLinks(traverseDirectoryToFile('mdLinks'))).toEqual(objLinksDirectory);
   });
 });
-
-// const prueba = traverseDirectoryToFile('prueba.md');
-// describe('validateLinks', () => {
-//   it('Se resuelve la promesa y retorna un array de objetos 
-// con href, text, file, status, ok', (done) => {
-//     const objResolveLinks = [
-//       {
-//         href: 'https://es.wikipedia.org/wiki/Markdown',
-//         text: '[Markdown]',
-//         file: 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md',
-//         status: 200,
-//         ok: 'ok',
-//       },
-//       {
-//         href: 'https://nodejs.org/',
-//         text: '[Node.js]',
-//         file: 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md',
-//         status: 200,
-//         ok: 'ok',
-//       },
-//     ];
-//     validateLinks(extractDirectoriesLinks(prueba))
-//       .then((result) => {
-//         expect(result).toEqual(objResolveLinks);
-//         done();
-//       });
-//   });
-// });
 
 describe('validateLinks', () => {
   test("status: 200 - message: 'Ok'", () => {

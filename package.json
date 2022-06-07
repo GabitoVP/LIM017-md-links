@@ -1,9 +1,19 @@
 {
-  "name": "md-links",
+  "name": "md-links-gabito",
   "version": "0.1.0",
   "description": "Obtener información de links en archivos markdown.",
   "author": "Gabriela Victorio Poma <lucerovp16@gmail.com>",
   "main": "index.js",
+  "keywords": [
+    "links",
+    "markdown",
+    "NodeJs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GabitoVP/LIM017-md-links"
+  },
+  "license": "ISC",
   "engines": {
     "node": ">=14.x"
   },
@@ -33,4 +43,5 @@
     "figlet": "^1.5.2",
     "node-fetch": "^3.2.4"
   }
+  
 }

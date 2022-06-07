@@ -6,37 +6,32 @@ import { mdLinks } from './index.js';
 import {
   broken,
   statistics,
-  help,
   validateFalse,
   validateTrue,
+  welcomeBanner,
+  helpBanner,
+  tableHelp,
 } from './cliFunction.js';
-// const myArgument = process.argv[2];
-
-// const prueba = mdLinks(myArgument, process.argv[3]);
-// console.log(process.argv);
 
 const [, , ...args] = process.argv;
-// const pathCli = process.argv[2];
-// const args = process.argv;
-// const acceptUppercase = args[2].toLowerCase();
 
 if (args.length === 0) {
-  console.log(chalk.magenta(`
-          BIENVENIDO(A) A LA LIBRERÍA MDLINKS
+  console.log(welcomeBanner);
+  console.log(chalk.blueBright(`
     Ingresa una ruta:
             «──────────|-❋ -|──────────»  
-            |   Ejemplo: mdlink <ruta>  |       
-            «──────────|-❋ -|──────────»
+            |   Ejemplo: mdLink <ruta>  |       
+            «──────────────────────────»
     
     ó ingrese --help para ver instrucciones de uso
             «──────────|-❋ -|──────────»  
-            |   Ejemplo: mdlink --help  |       
-            «──────────|-❋ -|──────────»
+            |   Ejemplo: mdLink --help  |       
+            «──────────────────────────»
     `));
 }
 if (args.length === 1 && args[0] === '--help') {
-  console.log(help);
-  // console.log((banner));
+  console.log(helpBanner);
+  tableHelp();
 }
 
 if (args.length === 1 && args[0] !== '--help') {
