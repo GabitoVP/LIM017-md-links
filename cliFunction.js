@@ -7,8 +7,8 @@ import figlet from 'figlet';
 export const validateFalse = (links) => {
   links.then((res) => {
     console.log(chalk.blue(`
-               «──────────|-❋ -|──────────»  
-               |    Links Encontrados      |       
+                
+                     Links Encontrados            
                «──────────|-❋ -|──────────»
     `));
     res.forEach((link) => {
@@ -40,9 +40,9 @@ jgs ´-=========-´()
 export const validateTrue = (links) => {
   links.then((res) => {
     console.log(chalk.blue(`
-    «──────────|-❋ -|──────────»  
-    |     Links Validados       |       
-    «──────────|-❋ -|──────────»
+      
+                 Links Validados             
+          «──────────|-❋ -|──────────»
     `));
     res.forEach((link) => {
       console.log(chalk.blue.bold(` 

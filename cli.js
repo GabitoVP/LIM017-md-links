@@ -19,13 +19,13 @@ if (args.length === 0) {
   console.log(welcomeBanner);
   console.log(chalk.blueBright(`
     Ingresa una ruta:
-            «──────────|-❋ -|──────────»  
-            |   Ejemplo: mdLink <ruta>  |       
+
+               Ejemplo: mdLink <ruta>       
             «──────────────────────────»
     
     ó ingrese --help para ver instrucciones de uso
-            «──────────|-❋ -|──────────»  
-            |   Ejemplo: mdLink --help  |       
+          
+               Ejemplo: mdLink --help        
             «──────────────────────────»
     `));
 }

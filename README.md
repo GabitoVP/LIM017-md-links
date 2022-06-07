@@ -36,7 +36,7 @@ Aqui puedes visualizar el [flujo](https://drive.google.com/file/d/1Ua1kSVk6UQIAD
 
 Para la instalación de esta librería será necesario ejecutar la siguiente línea de comando en tu terminal
 
-`npm install md-links-gabito`
+`npm i md-links-gabito`
 
 ## 5. Instrucciones
 
@@ -44,13 +44,13 @@ La librería se puede ejecutar de la siguiente manera a través de la terminal:
 
 1. Si ingresa sólo `mdLink` mostrará una guia para ingresar la ruta o pedir ayuda.
 
-[![inicio.png](https://i.postimg.cc/x1vxKkcd/inicio.png)](https://postimg.cc/ZWqxm5Pk)
+[![inicio.png](https://i.postimg.cc/d0TtwhmJ/inicio.png)](https://postimg.cc/jWtrhdF1)
 
 2. Para acceder a la opción ayuda y ver las instrucciones de uso:
 
 `mdLink --help`
 
-[![Ayuda.png](https://i.postimg.cc/pTjMMWs5/Ayuda.png)](https://postimg.cc/9RcnGh5c)
+[![Ayuda.png](https://i.postimg.cc/ZR7fH52y/Ayuda.png)](https://postimg.cc/PpDzrTtt)
 
 3.  Para obtener los links.
 
@@ -59,7 +59,7 @@ La librería se puede ejecutar de la siguiente manera a través de la terminal:
 `mdLink ./prueba.md` o `mdLink prueba.md` para archivos md.
 En el caso de directorios colocar `mdLink ./mdLinks` o `mdLink mdLinks`
 
-[![false.png](https://i.postimg.cc/pL7Pw6P7/false.png)](https://postimg.cc/JsNwJKDc)
+[![false.png](https://i.postimg.cc/65dPJtGF/false.png)](https://postimg.cc/D8w61V6c)
 
 4. Para hacer una petición HTTP y averiguar si el link funciona o no.
 
@@ -67,7 +67,7 @@ En el caso de directorios colocar `mdLink ./mdLinks` o `mdLink mdLinks`
 
 El output en este caso incluye la palabra ok o fallo después de la URL, así como el status de la respuesta recibida a la petición HTTP a dicha URL, por ejemplo: `mdLink prueba.md --validate`
 
-[![true.png](https://i.postimg.cc/J04nrHvd/true.png)](https://postimg.cc/KkwFQjZn)
+[![true.png](https://i.postimg.cc/3xN2jZ79/true.png)](https://postimg.cc/G40BdG4s)
 
 5. Para obtener estadísticas básicas sobre los links.
 
@@ -107,35 +107,4 @@ El output (salida) será un texto con el total de links, los links unicos y los 
 
 🙋 Gabriela Lucero Victorio Poma
 
-## 7. Checklist
-
-### General
-
-* [ ] Puede instalarse via `npm install --global <github-user>/md-links`
-
-### `README.md`
-
-* [ ] Un board con el backlog para la implementación de la librería.
-* [x] Documentación técnica de la librería.
-* [x] Guía de uso e instalación de la librería
-
-### API `mdLinks(path, opts)`
-
-* [x] El módulo exporta una función con la interfaz (API) esperada.
-* [x] Implementa soporte para archivo individual
-* [x] Implementa soporte para directorios
-* [x] Implementa `options.validate`
-
-### CLI
-
-* [x] Expone ejecutable `md-links` en el path (configurado en `package.json`)
-* [x] Se ejecuta sin errores / output esperado
-* [x] Implementa `--validate`
-* [x] Implementa `--stats`
-
-### Pruebas / tests
-
-* [x] Pruebas unitarias cubren un mínimo del 70% de statements, functions,
-  lines, y branches.
-* [x] Pasa tests (y linters) (`npm test`).
 
