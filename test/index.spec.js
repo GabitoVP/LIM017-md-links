@@ -1,7 +1,7 @@
 /* eslint-disable arrow-body-style */
 import { mdLinks } from '../index';
 
-jest.mock('../libraries.js');
+jest.mock('node-fetch');
 
 describe('mdLinks', () => {
   const arrayObjFalse = [

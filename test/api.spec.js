@@ -10,9 +10,8 @@ import {
   validateLinks,
 } from '../api';
 
-jest.mock('../libraries.js');
+jest.mock('node-fetch');
 
-const routeAbsolute = 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md';
 describe('pathExists', () => {
   it('Deberia retornar si existe la ruta ', () => {
     expect(pathExists('prueba.md')).toBe(true);
@@ -22,6 +21,7 @@ describe('pathExists', () => {
   });
 });
 
+const routeAbsolute = 'C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md';
 describe('pathIsAbsolute', () => {
   it('Deberia retornar una ruta absoluta', () => {
     expect(pathIsAbsolute('C:\\Users\\N14\\Desktop\\LABORATORIA\\PROYECTOS\\LIM017-md-links\\prueba.md')).toStrictEqual(routeAbsolute);

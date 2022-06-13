@@ -4,7 +4,7 @@
 /* eslint-disable no-confusing-arrow */
 import fs from 'fs';
 import path from 'path';
-import { fetch } from './libraries.js';
+import fetch from 'node-fetch';
 
 // determinar si la ruta existe
 export const pathExists = (route) => fs.existsSync(route);
@@ -35,13 +35,10 @@ export const traverseDirectoryToFile = (route) => {
   let arrayResultRoute = [];
   if (pathIsDirectory(route)) {
     const arrayDirectory = fs.readdirSync(route);
-    // console.log(arrayDirectory);
     arrayDirectory.forEach((file) => {
       const arrayRoute = path.join(route, file);
-      // console.log(arrayRoute);
       if (pathIsDirectory(arrayRoute)) {
         arrayResultRoute = arrayResultRoute.concat(traverseDirectoryToFile(arrayRoute));
-        // console.log(arrayResultRoute);
       }
       if (isMdFile(arrayRoute)) {
         arrayResultRoute.push(arrayRoute);
@@ -61,19 +58,16 @@ export const extractMdFileLinks = (route) => {
   const expRegFile = /\[(.*)\]\((https*?:([^"')\s]+))/gi;
   const expRegUrl = /(((https?:\/\/)|(http?:\/\/)|(www\.))[^\s\n)]+)(?=\))/gi;
   const expRegTextUrl = /\[(.*)\]/gi;
-  // lee el archivo ===/////
+  // lee el archivo /////
   const readFilePath = readFile(route);
   const allLinksMd = readFilePath.match(expRegFile); // match() obtener todas las ocurrencias de una expresión regular dentro de una cadena.
-  // console.log(allLinksMd);
   const arrayOnlyUrl = readFilePath.match(expRegUrl);
-  // console.log((arrayOnlyUrl));
 
   if (allLinksMd != null) {
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < allLinksMd.length; i++) {
       const textMd = allLinksMd[i].match(expRegTextUrl)[0];
       // console.log((allLinksMd[i].match(expRegTextUrl)[0]));// object after than string object (Rewiev Reg. expression)
-      // console.log(typeof (allLinksMd[i].match(expRegTextUrl)));
       const objLinks = {
         href: arrayOnlyUrl[i],
         text: textMd,
@@ -92,7 +86,6 @@ export const extractDirectoriesLinks = (arrayFileMd) => {
   const arrayReadDirectory = [];
   arrayFileMd.forEach((file) => {
     const arrayLinksDirectory = extractMdFileLinks(file);
-    // console.log(arrayLinksDirectory);
     arrayReadDirectory.push(arrayLinksDirectory);
   });
   return arrayReadDirectory.flat();
@@ -100,7 +93,7 @@ export const extractDirectoriesLinks = (arrayFileMd) => {
 // const prueba = traverseDirectoryToFile('prueba.md');
 // console.log(extractDirectoriesLinks(prueba));
 
-// validar links con peticiones http
+// validar links con peticiones http(clase request y response)
 export const validateLinks = (urls) => {
   return Promise.all(urls.map((arrayLinks) => {
     return fetch(arrayLinks.href)
@@ -112,13 +105,11 @@ export const validateLinks = (urls) => {
         };
         return objResolveLinks;
       })
-      .catch(() => {
-        return {
-          ...arrayLinks,
-          status: 'Este link esta roto',
-          ok: 'fallo',
-        };
-      });
+      .catch(() => ({
+        ...arrayLinks,
+        status: 'Este link esta roto',
+        ok: 'fallo',
+      }));
   }));
 };
 
